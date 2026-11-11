@@ -1,0 +1,14 @@
+{
+  "success": true,
+  "data": {
+    "config": {
+      "retry": { "attempts": 5, "on_status_codes": [429, 529] },
+      "cache": { "mode": "simple", "max_age": 3600 },
+      "strategy": { "mode": "fallback" },
+      "targets": [
+        { "provider": "openai", "virtual_key": "main-258f4d", "override_params": { "model": "gpt-4o" } },
+        { "provider": "azure-openai", "virtual_key": "azure-test-4110dd", "override_params": { "model": "gpt-4o" } }
+      ]
+    }
+  }
+}

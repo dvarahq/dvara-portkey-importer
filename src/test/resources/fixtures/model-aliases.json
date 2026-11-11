@@ -1,0 +1,15 @@
+{
+  "strategy": {
+    "mode": "conditional",
+    "conditions": [
+      { "query": { "params.model": { "$eq": "fastest" } }, "then": "fast-model" },
+      { "query": { "params.model": { "$eq": "smartest" } }, "then": "smart-model" }
+    ],
+    "default": "balanced-model"
+  },
+  "targets": [
+    { "name": "smart-model", "provider": "@anthropic-vk", "override_params": { "model": "claude-3.5-sonnet" } },
+    { "name": "fast-model", "provider": "@oai-vk", "override_params": { "model": "gpt-4o-mini" } },
+    { "name": "balanced-model", "provider": "@oai-vk", "override_params": { "model": "gpt-4o" } }
+  ]
+}

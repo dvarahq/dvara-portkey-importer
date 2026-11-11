@@ -1,0 +1,15 @@
+{
+  "strategy": { "mode": "fallback", "on_status_codes": [429, 500, 503] },
+  "targets": [
+    {
+      "provider": "@openai-prod",
+      "default_params": { "temperature": 0.7, "max_tokens": 1024 },
+      "override_params": { "model": "gpt-4o" },
+      "drop_params": ["logprobs", "tools[0].function.strict"]
+    },
+    {
+      "provider": "@anthropic-backup",
+      "override_params": { "model": "claude-sonnet-4-20250514", "max_tokens": 4000 }
+    }
+  ]
+}

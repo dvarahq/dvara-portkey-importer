@@ -1,0 +1,28 @@
+{
+  "request_timeout": 30000,
+  "strategy": { "mode": "loadbalance" },
+  "targets": [
+    {
+      "provider": "azure-openai",
+      "api_key": "${AZURE_OPENAI_KEY}",
+      "resource_name": "my-eu-resource",
+      "deployment_id": "gpt-4o-eu",
+      "api_version": "2024-08-01-preview",
+      "weight": 0.5
+    },
+    {
+      "weight": 0.5,
+      "strategy": { "mode": "fallback", "on_status_codes": [429, 503] },
+      "targets": [
+        { "provider": "openai", "api_key": "$OPENAI_API_KEY", "override_params": { "model": "gpt-4o" } },
+        {
+          "provider": "bedrock",
+          "aws_access_key_id": "AKIA-LITERAL-AWS-SECRET-0002",
+          "aws_secret_access_key": "LITERAL-AWS-SECRET-0003",
+          "aws_region": "us-east-1",
+          "override_params": { "model": "anthropic.claude-3-5-sonnet-20240620-v1:0" }
+        }
+      ]
+    }
+  ]
+}

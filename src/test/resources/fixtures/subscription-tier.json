@@ -1,0 +1,23 @@
+{
+  "strategy": {
+    "mode": "conditional",
+    "conditions": [
+      { "query": { "metadata.user_plan": { "$eq": "paid" } }, "then": "premium-model" },
+      { "query": { "metadata.user_plan": { "$eq": "free" } }, "then": "standard-model" }
+    ],
+    "default": "standard-model"
+  },
+  "targets": [
+    {
+      "name": "premium-model",
+      "provider": "@openai-vk-xxx",
+      "override_params": { "model": "gpt-4o" },
+      "input_guardrails": ["pg-pii-detector-xxx", "pg-toxic-content-xxx"]
+    },
+    {
+      "name": "standard-model",
+      "provider": "@openai-vk-xxx",
+      "override_params": { "model": "gpt-3.5-turbo" }
+    }
+  ]
+}

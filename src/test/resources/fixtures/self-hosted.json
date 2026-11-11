@@ -1,0 +1,16 @@
+{
+  "strategy": { "mode": "fallback" },
+  "targets": [
+    {
+      "provider": "openai",
+      "custom_host": "https://svc:LITERAL-HOST-SECRET-0004@vllm.internal:8000/v1?token=LITERAL-HOST-SECRET-0004",
+      "api_key": "LITERAL-VLLM-SECRET-0005",
+      "override_params": { "model": "meta-llama/Llama-3.1-8B-Instruct" }
+    },
+    {
+      "provider": "ollama",
+      "custom_host": "http://ollama.internal:11434",
+      "override_params": { "model": "llama3.1" }
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "provider": "anthropic",
+  "api_key": "${ANTHROPIC_API_KEY}",
+  "override_params": { "model": "claude-sonnet-4-5" },
+  "before_request_hooks": [
+    {
+      "type": "guardrail",
+      "id": "pii-guard",
+      "deny": true,
+      "checks": [
+        { "id": "portkey.pii", "parameters": { "redact": true, "categories": ["EMAIL_ADDRESS", "SSN"] } }
+      ]
+    },
+    {
+      "type": "guardrail",
+      "id": "allowed-models",
+      "deny": true,
+      "checks": [
+        { "id": "default.modelwhitelist", "parameters": { "models": ["claude-sonnet-4-5", "claude-haiku-4-5"] } }
+      ]
+    },
+    {
+      "type": "guardrail",
+      "id": "no-keys-in-prompts",
+      "deny": true,
+      "checks": [ { "id": "default.regexMatch", "parameters": { "rule": "sk-[A-Za-z0-9]{20,}" } } ]
+    }
+  ],
+  "input_guardrails": [ { "azure.shieldPrompt": {}, "deny": true } ],
+  "output_guardrails": [
+    { "default.contains": { "operator": "none", "words": ["confidential"] }, "deny": false },
+    "pg-fact-checker-xxx"
+  ]
+}
